@@ -66,7 +66,7 @@ df['data_do_cadastro'] = df['data_do_cadastro'].apply(lambda x: x.strftime('%Y-%
 df['cidade_de_origem'] = df['cidade_de_origem'].str.replace('rj','rio de janeiro')
 df['cidade_de_origem'] = df['cidade_de_origem'].str.replace('sao paulo','são paulo')
 
-df['valor_real'] = df['valor_real'].str.replace('R\$', '', regex= True)  
+df['valor_real'] = df['valor_real'].str.replace(r'R\$', '', regex= True)  
 df['valor_real'] = df['valor_real'].str.replace('.', '', regex= False)
 df['valor_real'] = df['valor_real'].str.replace(',', '.', regex= False)
 df['valor_real'] = pd.to_numeric(df['valor_real'], errors= 'coerce') 
@@ -75,4 +75,3 @@ df['valor_real'] = pd.to_numeric(df['valor_real'], errors= 'coerce')
 print(df.head(50))
 
 df.to_excel("cleaned_excel.xlsx", index= False)
-
