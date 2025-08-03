@@ -52,7 +52,6 @@ def try_convert(data_str):
         except:
             continue
 
-
 # caso o to_datetime não identificar, usamos o import dateparse que identifica
 # melhor as traduçõe de datas.
     parsed = dateparser.parse(data_str, languages=['pt'])
@@ -62,8 +61,7 @@ def try_convert(data_str):
 
 # cria nova coluna com valor do data_do_cadastro aplicando a função
 df['data_do_cadastro'] = df['data_do_cadastro'].apply(try_convert)
-df['data_do_cadastro'] = df['data_do_cadastro'].apply(
-    lambda x: x.strftime('%Y-%m-%d') if pd.notnull(x) else "Data não informada")
+df['data_do_cadastro'] = df['data_do_cadastro'].apply(lambda x: x.strftime('%Y-%m-%d') if pd.notnull(x) else "Data não informada")
 
 df['cidade_de_origem'] = df['cidade_de_origem'].str.replace('rj','rio de janeiro')
 df['cidade_de_origem'] = df['cidade_de_origem'].str.replace('sao paulo','são paulo')
@@ -78,4 +76,3 @@ print(df.head(50))
 
 df.to_excel("cleaned_excel.xlsx", index= False)
 
-#df git test
