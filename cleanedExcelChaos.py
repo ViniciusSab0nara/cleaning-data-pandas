@@ -119,4 +119,4 @@ df['idade'] = df['idade'].astype(str)
 
 print(df.head(50))
 
-##df.to_excel("cleaned_excel.xlsx", index= False)
+df.to_excel("cleaned_excel.xlsx", index= False)
