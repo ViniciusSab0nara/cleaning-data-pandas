@@ -71,7 +71,52 @@ df['valor_real'] = df['valor_real'].str.replace('.', '', regex= False)
 df['valor_real'] = df['valor_real'].str.replace(',', '.', regex= False)
 df['valor_real'] = pd.to_numeric(df['valor_real'], errors= 'coerce') 
 
+#corrigindo a coluna 'idade'
+df['idade'] = df['idade'].astype(str).str.lower().str.replace('anos', '').str.strip()
+
+unidades = {
+    'zero': 0, 'um': 1, 'uma': 1, 'dois': 2, 'duas': 2, 'três': 3,
+    'quatro': 4, 'cinco': 5, 'seis': 6, 'sete': 7, 'oito': 8, 'nove': 9
+}
+
+dezenas = {
+    'dez': 10, 'onze': 11, 'doze': 12, 'treze': 13, 'quatorze': 14,
+    'catorze': 14, 'quinze': 15, 'dezesseis': 16, 'dezessete': 17,
+    'dezoito': 18, 'dezenove': 19, 'vinte': 20, 'trinta': 30,
+    'quarenta': 40, 'cinquenta': 50, 'sessenta': 60
+}
+
+def texto_para_numeros(texto):
+
+    try:
+        return int(texto)
+    except:
+        pass
+
+    if texto in dezenas:
+        return dezenas[texto]
+    if texto in unidades:
+        return unidades[texto]
+
+    if ' e ' in texto:
+        partes = texto.split(' e ')
+        total = 0
+        for parte in partes:
+            if parte in dezenas:
+                total += dezenas[parte]
+            elif parte in unidades:
+                total += unidades[parte]
+            else: 
+                return None
+        return total
+
+df['idade'] = df['idade'].apply(texto_para_numeros)
+df['idade'] = df['idade'].fillna(-1)
+df['idade'] = df['idade'].astype(int)
+df['idade'] = df['idade'].replace(-1, 'nenhum valor informado')
+df['idade'] = df['idade'].astype(str)
+
 
 print(df.head(50))
 
-df.to_excel("cleaned_excel.xlsx", index= False)
+##df.to_excel("cleaned_excel.xlsx", index= False)
