@@ -117,6 +117,12 @@ df['idade'] = df['idade'].replace(-1, 'nenhum valor informado')
 df['idade'] = df['idade'].astype(str)
 
 
-print(df.head(50))
+print(df.head(5))
+print(df.describe())
+print(df['cidade_de_origem'].value_counts())
 
-df.to_excel("cleaned_excel0.2.xlsx", index= False)
+
+
+
+
+## df.to_excel("cleaned_excel0.2.xlsx", index= False)
