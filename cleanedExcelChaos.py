@@ -122,7 +122,10 @@ print(df.describe())
 print(df['cidade_de_origem'].value_counts())
 
 
+from sqlalchemy import create_engine
 
+engine = create_engine("postgresql://postgres:admin@localhost:5432/sql_estudos")
+df.to_sql("tabelaTratada", engine, if_exists="replace", index=False)
 
 
 ## df.to_excel("cleaned_excel0.2.xlsx", index= False)
